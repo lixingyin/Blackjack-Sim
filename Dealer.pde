@@ -1,4 +1,4 @@
-class Dealer
+class Dealer{
   int handValue;
   
   Dealer()
@@ -6,6 +6,8 @@ class Dealer
   
 
 
-void randomCard()
+void randomCard(){
   int x = int(random(13));
   println(x);
+}
+}
