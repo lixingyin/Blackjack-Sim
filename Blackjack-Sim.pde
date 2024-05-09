@@ -17,7 +17,7 @@ PImage clubs_K, spades_K, hearts_K, diamonds_K;
 
 
 //Import images for player decisions (hit, stand, split, double)
-PImage hit, stand, split, double;
+PImage hit, stand, split, doubleDown;
 boolean playerHit = false;
 boolean playerStand = false;
 boolean playerSplit = false;
