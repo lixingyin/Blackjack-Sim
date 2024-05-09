@@ -1,20 +1,17 @@
 class Card{
   int value;
   String suit;
-  String color;
+  String colour;
 
   Card(int v, String s){
   this.value = v;
   this.suit = s;
    
     if(this.suit == "spades" || this.suit == "clubs"){
-      this.color = "black";
+      this.colour = "black";
     }
-    else(){
-      this.color = "red";
+    else{
+      this.colour = "red";
     }
   }
 }
-
-
-  
