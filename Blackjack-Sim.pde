@@ -28,11 +28,16 @@ PImage cheatSheat, howToPlay;
 boolean cheatSheatClicked = false;
 boolean howToPlayClicked = false;
 
+Dealer bob new Dealer();
+
 card[] cards;
 
 void setup() {
   size(600, 600);
   createGUI();
+
+  bob.randomCard();
+
 }
 
 //Create background that looks like a card table
