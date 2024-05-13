@@ -1,3 +1,4 @@
+import g4p_controls.*;
 
 //Import images for all 52 cards
 PImage clubs_A, spades_A, hearts_A, diamonds_A;
@@ -27,6 +28,8 @@ PImage cheatSheat, howToPlay;
 boolean cheatSheatClicked = false;
 boolean howToPlayClicked = false;
 
+PImage Blackjack;
+
 Dealer bob = new Dealer();
 
 Card[] cards;
@@ -35,7 +38,7 @@ void setup() {
   size(600, 600);
   //createGUI();
   bob.randomCard();
-  
+ 
   clubs_A = loadImage("clubs_A.png");
   clubs_2 = loadImage("clubs_2.png");
   clubs_3 = loadImage("clubs_3.png");
@@ -49,7 +52,7 @@ void setup() {
   clubs_J = loadImage("clubs_J.png");
   clubs_Q = loadImage("clubs_Q.png");
   clubs_K = loadImage("clubs_K.png");
-  
+ 
   spades_A = loadImage("spades_A.png");
   spades_2 = loadImage("spades_2.png");
   spades_3 = loadImage("spades_3.png");
@@ -63,17 +66,17 @@ void setup() {
   spades_J = loadImage("spades_J.png");  
   spades_Q = loadImage("spades_Q.png");
   spades_K = loadImage("spades_K.png");
-  
+ 
   hearts_A = loadImage("hearts_A.png");
   hearts_2 = loadImage("hearts_2.png");
   hearts_3 = loadImage("hearts_3.png");
   hearts_4 = loadImage("hearts_4.png");
-  hearts_5 = loadImage("hearts_5.png"); 
+  hearts_5 = loadImage("hearts_5.png");
   hearts_6 = loadImage("hearts_6.png");
   hearts_7 = loadImage("hearts_7.png");
   hearts_8 = loadImage("hearts_8.png");
   hearts_9 = loadImage("hearts_9.png");
-  hearts_10 = loadImage("hearts_10.png");   
+  hearts_10 = loadImage("hearts_10.png");  
   hearts_J = loadImage("hearts_J.png");
   hearts_Q = loadImage("hearts_Q.png");
   hearts_K = loadImage("hearts_K.png");
@@ -90,14 +93,42 @@ void setup() {
   diamonds_10 = loadImage("diamonds_10.png");
   diamonds_J = loadImage("diamonds_J.png");
   diamonds_Q = loadImage("diamonds_Q.png");
-  diamonds_K = loadImage("diamonds_K.png");
+  diamonds_K = loadImage("diamonds_K.png"); 
   
+  Blackjack = loadImage("Blackjack.png"); 
 }
 
 //Create background that looks like a card table
 void draw () {
   background(0, 150, 35);  //darker green
+  
+  rectMode(CORNERS);
   fill(0);
+  noStroke();
+  rect(0, 600, 600, 547);
+  rect(0, 547, 100, 500);
+  rect(600, 547, 500, 500);
+  
+  rectMode(CORNERS);
+  fill(0, 150, 35);
+  noStroke();
+  rect(75, 510, 100, 490);
+  rect(440, 510, 550, 490);
+
+  
+  noFill();
+  strokeWeight(50);
+  stroke(150,80,20);
+  ellipse(300, 270, 800, height);
+  
+  rectMode(CENTER);
+  fill(0, 150, 35);
+  noStroke();
+  rect(300, 100, 600, 300);
+  
+  
   image(clubs_A, 0, 0);
-  //textSize(#);
+  
+  image(Blackjack, 130, 20);
+  
 }
