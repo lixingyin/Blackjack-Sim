@@ -36,8 +36,6 @@ Card[] cards;
 
 void setup() {
   size(600, 600);
-  //createGUI();
-  bob.randomCard();
  
   clubs_A = loadImage("clubs_A.png");
   clubs_2 = loadImage("clubs_2.png");
@@ -126,9 +124,50 @@ void draw () {
   noStroke();
   rect(300, 100, 600, 300);
   
+  noFill();
+  strokeWeight(3);
+  stroke(200,150, 35);
+  rect(300,170,500,100);
+  rect(300,350,500,100);
+ 
+  fill(255);
+  rect(125,440,150,40);
+  rect(300,440,150,40);
+  rect(475,440,150,40);
+  rect(125,500,150,40);
+  rect(300,500,150,40);
+  rect(475,500,150,40);
+  rect(125,560,150,40);
+  rect(300,560,150,40);
+  rect(475,560,150,40);  
   
-  image(clubs_A, 0, 0);
+  fill(0);
+  textSize(16);
+  text("Deal",110,445);
+  text("Decrease Bet",250,445);
+  text("Increase Bet",430,445);
+  text("Split",110,505);
+  text("Double",270,505);
+  text("Rules",450,505);
+  text("Hit",110,565);
+  text("Stand",280,565);
+  text("Help",450,565);
+
+  
+  createGUI();
+  noLoop();
   
   image(Blackjack, 130, 20);
+  bob.displayNewCard(bob.randomCard());
+  bob.displayNewCard(bob.randomCard());
+  
+  fill(0);
+  textSize(28);
+  text("Dealer: "+ bob.handValue, 50, 100); 
+  text("Player: "+ bob.playerHandValue, 50, 280);
+  text("$1, 000.00", 400, 280);
+  
+  
+  //noLoop();
   
 }
