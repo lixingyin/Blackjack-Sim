@@ -171,3 +171,33 @@ void draw () {
   //noLoop();
   
 }
+
+ArrayList<Card> newDeck(){
+  ArrayList<Card> card_list = new ArrayList<Card>();
+  String[] suits = {"Spade","Club","Heart", "Diamond"};
+  for (int h = 0; h < 4; h++){
+    
+    for(int i = 1; i < 14; i++){
+      if (i == 10){
+       card_list.add(new Card(1, 11, "ace", suits[j]));
+      }
+      if (i == 10){
+       card_list.add(new Card(10,0, "ten", suits[j]));
+      }
+      if (i == 11){
+       card_list.add(new Card(10,0, "jack", suits[j]));
+      }
+      if (i == 12){
+       card_list.add(new Card(10,0, "queen", suits[j]));
+      }
+      if (i == 13){
+       card_list.add(new Card(10,0, "king", suits[j]));
+      }
+      else{
+        card_list.add(new Card(i,0, str(i), suits[j]));
+      }
+    }
+  }
+  return card_list;
+}
+
