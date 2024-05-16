@@ -22,10 +22,37 @@ class Hand{
     }
     int checkval(){
       int n = 0;
+      int n_ace = 0;
       for (int i = 0; i < cards.size(); i++){
-        n += cards.get(i).val;
+        if (cards.get(i).number == "ace"){
+          n_ace += 1;
+        }
+        else{
+          n += cards.get(i).val1;
+        }
       }
-      return n;
+      if (n_ace > 0){
+        int close_21 = 0;
+        for (int a=0; a< n_ace+1 ; a++){
+            if ((n + 1 * a + 11 * (n_ace-a)<=21) && (n + 1 * a + 11 * (n_ace-a)>close_21)){
+              close_21 = n + 1 * a + 11 * (n_ace-a);
+            }
+        }
+        if (close_21 == 0){
+          return 22;
+        }
+        else{
+          return close_21;
+        }
+      }
+      else{
+        if (n > 21){
+          return 22;
+        }
+        else{
+          return n;
+        }
+      }
     }
     int checknumcards(){
       return cards.size();
