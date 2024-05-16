@@ -179,22 +179,22 @@ ArrayList<Card> newDeck(){
     
     for(int i = 1; i < 14; i++){
       if (i == 10){
-       card_list.add(new Card(1, 11, "ace", suits[j]));
+       card_list.add(new Card(1, 11, "ace", suits[h]));
       }
       if (i == 10){
-       card_list.add(new Card(10,0, "ten", suits[j]));
+       card_list.add(new Card(10,0, "ten", suits[h]));
       }
       if (i == 11){
-       card_list.add(new Card(10,0, "jack", suits[j]));
+       card_list.add(new Card(10,0, "jack", suits[h]));
       }
       if (i == 12){
-       card_list.add(new Card(10,0, "queen", suits[j]));
+       card_list.add(new Card(10,0, "queen", suits[h]));
       }
       if (i == 13){
-       card_list.add(new Card(10,0, "king", suits[j]));
+       card_list.add(new Card(10,0, "king", suits[h]));
       }
       else{
-        card_list.add(new Card(i,0, str(i), suits[j]));
+        card_list.add(new Card(i,0, str(i), suits[h]));
       }
     }
   }
