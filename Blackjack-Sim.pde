@@ -22,6 +22,9 @@ boolean playerHit = false;
 boolean playerStand = false;
 boolean playerSplit = false;
 boolean playerDouble = false;
+boolean gameOn = true;
+boolean waiting = true;
+int round =1;
 
 //Import images for how to play and the cheat sheet
 PImage cheatSheat, howToPlay;
@@ -36,7 +39,6 @@ Card[] cards;
 
 void setup() {
   size(600, 600);
- 
   clubs_A = loadImage("clubs_A.png");
   clubs_2 = loadImage("clubs_2.png");
   clubs_3 = loadImage("clubs_3.png");
@@ -98,6 +100,9 @@ void setup() {
 
 //Create background that looks like a card table
 void draw () {
+  
+  createGUI();
+  if (round ==1){
   background(0, 150, 35);  //darker green
   
   rectMode(CORNERS);
@@ -154,12 +159,17 @@ void draw () {
   text("Help",450,565);
 
   
-  createGUI();
-  noLoop();
+  
+  
+  //if (looping == false){
+
+  
   
   image(Blackjack, 130, 20);
-  bob.displayNewCard(bob.randomCard());
-  bob.displayNewCard(bob.randomCard());
+  
+    bob.displayNewCard(bob.randomCard());
+    bob.displayNewCard(bob.randomCard());
+  }
   
   fill(0);
   textSize(28);
@@ -167,37 +177,29 @@ void draw () {
   text("Player: "+ bob.playerHandValue, 50, 280);
   text("$1, 000.00", 400, 280);
   
-  
-  //noLoop();
-  
-}
-
-ArrayList<Card> newDeck(){
-  ArrayList<Card> card_list = new ArrayList<Card>();
-  String[] suits = {"Spade","Club","Heart", "Diamond"};
-  for (int h = 0; h < 4; h++){
-    
-    for(int i = 1; i < 14; i++){
-      if (i == 10){
-       card_list.add(new Card(1, 11, "ace", suits[h]));
-      }
-      if (i == 10){
-       card_list.add(new Card(10,0, "ten", suits[h]));
-      }
-      if (i == 11){
-       card_list.add(new Card(10,0, "jack", suits[h]));
-      }
-      if (i == 12){
-       card_list.add(new Card(10,0, "queen", suits[h]));
-      }
-      if (i == 13){
-       card_list.add(new Card(10,0, "king", suits[h]));
-      }
-      else{
-        card_list.add(new Card(i,0, str(i), suits[h]));
-      }
-    }
+  if (round > 1){
+   while (gameOn==true){
+     delay(3000);
+     waiting = false;
+     while(waiting ==true){
+     }
+     bob.displayNewCard(bob.randomCard());
+     round+=1;
+     println(round);
+     gameOn = false;
+   }
+   gameOn=true;
   }
-  return card_list;
+  else{
+  }
+  round+=1;
+  //println(round);  
 }
 
+void game(){
+  
+  gameOn = true;
+  redraw();
+  bob.displayNewCard(bob.randomCard());
+  
+}
