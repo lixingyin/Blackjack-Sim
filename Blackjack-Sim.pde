@@ -107,7 +107,8 @@ void draw () {
   text("Rules",450,505);
   text("Hit",110,565);
   text("Stand",280,565);
-  text("Help",450,565);
+  text("Cheat Sheet",435,565);
+
 
   image(Blackjack, 130, 20);
   
