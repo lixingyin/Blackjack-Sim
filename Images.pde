@@ -1,3 +1,8 @@
+////////////////////////////////////////////////////////
+//               VOID IMAGE LOADER                    //
+////////////////////////////////////////////////////////
+// * Load all images and associate them with their respective name
+
 void imageLoader(){
   clubs_A = loadImage("clubs_A.png");
   clubs_2 = loadImage("clubs_2.png");
@@ -57,4 +62,22 @@ void imageLoader(){
   
   Blackjack = loadImage("Blackjack.png"); 
   cardBack = loadImage("cardBack.png");
+  rules = loadImage("rules.png");
+  cheatSheet = loadImage("cheatSheet.png");
+}
+
+////////////////////////////////////////////////////////
+//               VOID DISPLAY SCREEN                  //
+////////////////////////////////////////////////////////
+// * Display the appropiate secondary tab, based on the player's selection
+
+void displayScreens(){
+  if (rulesScreen == true){
+    rules.resize(900,600);
+    image(rules, 600, 0);
+  }
+  else if (cheatSheetScreen == true){
+    cheatSheet.resize(900,600);
+    image(cheatSheet, 600, 0);
+  }
 }
