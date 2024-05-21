@@ -1,4 +1,17 @@
-import g4p_controls.*;
+////////////////////////////////////////////////////////
+//  BLACKJACK SIMULATOR                               //
+//  * MATEO GONZALEZ                                  //
+//  * NATHAN EDWARDS                                  //
+//  * LI XING YIN                                     //
+//                                                    //
+//  ICS4U 01 - Jason Schattman                        //
+//  MAY 2024                                          //
+////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////
+//                      IMAGES                        //
+////////////////////////////////////////////////////////
 
 //Import images for all 52 cards
 PImage clubs_A, spades_A, hearts_A, diamonds_A;
@@ -14,116 +27,120 @@ PImage clubs_10, spades_10, hearts_10, diamonds_10;
 PImage clubs_J, spades_J, hearts_J, diamonds_J;
 PImage clubs_Q, spades_Q, hearts_Q, diamonds_Q;
 PImage clubs_K, spades_K, hearts_K, diamonds_K;
+
+//Import Additional Images
 PImage cardBack;
 PImage Blackjack;
+PImage rules, cheatSheet;
 
 
-//Import images for player decisions (hit, stand, split, double)
+////////////////////////////////////////////////////////
+//                    BOOLEANS                        //
+////////////////////////////////////////////////////////
+
+// Booleans that define the Player's Status
 boolean playerStand = false;
-boolean determineWinner = false;
-
-boolean cardClicked = false;
-boolean incrementsClicked= false; 
-boolean activeGame = false;
-int round =1;
 boolean playerBusted = false;
 boolean playerDoubled = false;
+boolean cardClicked = false;
+boolean incrementsClicked= false; 
+
+// Booleans that define the Game's Status
+boolean activeGame = false;
 boolean restart = false;
+boolean determineWinner = false;
+boolean Aprocedure = false;
 
-//Import images for how to play and the cheat sheet
-PImage cheatSheat, howToPlay;
-boolean cheatSheatClicked = false;
-boolean howToPlayClicked = false;
+// Booleans that define the Screen's Status
+boolean rulesScreen = true;
+boolean cheatSheetScreen = false;
 
 
+////////////////////////////////////////////////////////
+//             OTHER GENERAL VARIABLES                //
+////////////////////////////////////////////////////////
 
-float [] increments = {1,5,10, 25, 50, 100,1000};
-int incrementIndex = 0;
+float [] increments = {1,5,10, 25, 50, 100, 1000};  // Available Increments
+int incrementIndex = 0;  // Initial Increment set at $1.00
+int round =1;  // Counter used to restart game
 
+
+////////////////////////////////////////////////////////
+//           CREATE DEALER AND PLAYER                 //
+////////////////////////////////////////////////////////
 
 Dealer bob = new Dealer();
 Player nathan = new Player (1000);
 
 
+////////////////////////////////////////////////////////
+//                 VOID SETUP                         //
+////////////////////////////////////////////////////////
+
 void setup() {
-  size(600, 600);
+  // Create Screen and upload all images
+  size(1500, 600);
   imageLoader();
 }
 
-//Create background that looks like a card table
+////////////////////////////////////////////////////////
+//                 VOID DRAW                          //
+////////////////////////////////////////////////////////
+
 void draw () {
-  
+  //************ GENERATE NEW GAME *******************
   if (round ==1){
-  background(0, 150, 35);  //darker green
-  
-  rectMode(CORNERS);
-  fill(0);
-  noStroke();
-  rect(0, 600, 600, 547);
-  rect(0, 547, 100, 500);
-  rect(600, 547, 500, 500);
-  
-  rectMode(CORNERS);
-  fill(0, 150, 35);
-  noStroke();
-  rect(75, 510, 100, 490);
-  rect(440, 510, 550, 490);
+    background(0, 150, 35);  // Dark green background
+    
+    rectMode(CORNERS);
+    noStroke();
+    
+    // Black background
+    fill(0);
+    rect(0, 600, 600, 547);
+    rect(0, 547, 100, 500);
+    rect(600, 547, 500, 500);
 
+    // Brown background
+    noFill();
+    strokeWeight(50);
+    stroke(150,80,20);
+    ellipse(300, 270, 800, height);
+    
+    // Green background to cover extra elipse
+    rectMode(CENTER);
+    fill(0, 150, 35);
+    noStroke();
+    rect(300, 100, 600, 300);
+    
+    // Gold dealer and player boards
+    noFill();
+    strokeWeight(3);
+    stroke(200,150, 35);
+    rect(300,170,500,100);
+    rect(300,350,500,100);
   
-  noFill();
-  strokeWeight(50);
-  stroke(150,80,20);
-  ellipse(300, 270, 800, height);
-  
-  rectMode(CENTER);
-  fill(0, 150, 35);
-  noStroke();
-  rect(300, 100, 600, 300);
-  
-  noFill();
-  strokeWeight(3);
-  stroke(200,150, 35);
-  rect(300,170,500,100);
-  rect(300,350,500,100);
- 
-  fill(255);
-  rect(125,440,150,40);
-  rect(300,440,150,40);
-  rect(475,440,150,40);
-  rect(125,500,150,40);
-  rect(300,500,150,40);
-  rect(475,500,150,40);
-  rect(125,560,150,40);
-  rect(300,560,150,40);
-  rect(475,560,150,40);  
-  
-  fill(0);
-  textSize(16);
-  text("Deal",110,445);
-  text("Decrease Bet",250,445);
-  text("Increase Bet",430,445);
-  text("Split",110,505);
-  text("Double",270,505);
-  text("Rules",450,505);
-  text("Hit",110,565);
-  text("Stand",280,565);
-  text("Cheat Sheet",435,565);
-
-
-  image(Blackjack, 130, 20);
-  
+    // Game Title
+    image(Blackjack, 130, 20);
   }
   
+  //************ UPDATE SCREEN *******************
+  // Update Rules and Cheat Sheet Screens
+  displayScreens();
+  
+  // Green background to update game info
   noStroke();
   fill(0, 150, 35);
   rect(300,260,600,50);
   rect(150,90,300,50);
   
+  // Generate game info
   fill(0);
   textSize(28);
   text("Dealer: "+ bob.handValue, 50, 100); 
   text("Player: "+ bob.playerHandValue, 50, 280);
 
+  // Display current beting amount and avaliable funds
   if (playerDoubled ==true){
     text("Bet: $"+2*increments[incrementIndex], 220, 280);
   }
@@ -132,15 +149,14 @@ void draw () {
   }
   text("$"+nathan.currentAmount, 400, 280);
   
-  if (round >2 && cardClicked ==true && activeGame ==true){
-     bob.displayNewCardPlayer(bob.randomCard(1));
-     cardClicked = false;
-     if (playerDoubled ==true){
-       activeGame =false;
-     }
-  }
   
-  else if (round >1 && cardClicked ==true && playerDoubled == false){
+  //************ EVALUATE CURRENT GAME AND PLAYER CONDITIONS *******************
+  
+  // Procedure when the game starts
+  // * Generate cards for the player and dealer
+  // * Set the game status to active
+  
+  if (cardClicked ==true && playerDoubled == false){
     bob.displayNewCardPlayer(bob.randomCard(1));
     bob.displayNewCardPlayer(bob.randomCard(1));
     bob.displayNewCardDealer(bob.randomCard(2));
@@ -149,82 +165,48 @@ void draw () {
     cardClicked = false;
   }
   
+  // Procedure when the player hits
+  // * Generate a new card for player
+  // * Set the game status as inactive if the player doubled
+  
+  else if (cardClicked ==true && activeGame ==true){
+     bob.displayNewCardPlayer(bob.randomCard(1));
+     cardClicked = false;
+     if (playerDoubled ==true){
+       activeGame =false;
+     }
+  }
+  
+  // Procedure when the player Stands
+  
   if (playerStand == true){
+    // * Reveal dealer's first card 
     if(bob.dealerRound==1){
       bob.dealerRound = 0;
       bob.displayNewCardDealer(bob.randomCard(2));
-      bob.dealerRound =2;
+      bob.dealerRound =2; // Updates new card position
      }
+    
+    // * Deal cards to dealer's hand until it goes over 17 or the dealer is busted 
     else if (bob.dealerRound!=1 && bob.handValue <= 17){
       delay(500);
       bob.displayNewCardDealer(bob.randomCard(2));
-      bob.dealerRound +=1;
-      
+      bob.dealerRound +=1; 
     }
+    
+    // * Reset the playerStand status and activate the determineWinner boolean
     else{
       playerStand = false;
       determineWinner = true;
     }
   }
   
+  // Dealer evaluates the game conditions and checks if there's a winner by this point
   bob.checkOutcome(nathan);
+  
+  // Draws the buttons according to the game conditions
+  displayButtons();
+  
+  // Increases rthe round counter by one
   round+=1;
-}
-
-
-
-void mouseClicked(){
-  if (cardClicked == false){
-    if (mouseX >= 50 && mouseX <= 200 && mouseY >= 420 && mouseY <= 460 && activeGame ==false && playerBusted == false && nathan.currentAmount >0){  // Deal
-      if(restart == true){
-        round =1;
-        bob.handValue = 0;
-        bob.playerHandValue = 0;
-        bob.playerRound= 1;
-        bob.dealerRound =1;  
-        if(playerDoubled == true){
-        nathan.currentBet /=2;
-        }
-        playerDoubled = false;
-        restart = false;
-      }
-    cardClicked = true;
-    }
-    else if (mouseX >= 50 && mouseX <= 200 && mouseY >= 540 && mouseY <= 580 && activeGame ==true){  // Hit
-    cardClicked = true;
-    }
-    
-    else if (mouseX >= 225 && mouseX <= 375 && mouseY >= 480 && mouseY <= 520 && activeGame ==true){  // Double
-      cardClicked = true;
-      playerStand = true;
-      playerDoubled = true;
-      nathan.currentBet *=2;
-    }
-      //rect(125,440,150,40);
-      //rect(300,440,150,40);
-      //rect(475,440,150,40);
-      //rect(125,500,150,40);
-      //rect(300,500,150,40);
-      //rect(475,500,150,40);
-      //rect(125,560,150,40);
-      //rect(300,560,150,40);
-      //rect(475,560,150,40);  
-  }
-  
-  if (mouseX >= 400 && mouseX <= 550 && mouseY >= 420 && mouseY <= 460 && activeGame ==false && playerBusted == false && playerStand == false && incrementIndex+1 <increments.length ){  // Inc Increment
-    incrementIndex +=1;
-    nathan.currentBet = increments[incrementIndex];
-    println(nathan.currentBet);
-  }
-  
-  if (mouseX >= 225 && mouseX <= 375 && mouseY >= 420 && mouseY <= 460 && activeGame ==false && playerBusted == false && playerStand == false && incrementIndex >0 ){  // dec Increment
-    incrementIndex -=1;
-    nathan.currentBet = increments[incrementIndex];
-    println(nathan.currentBet);
-  }
-  
-  if (mouseX >= 225 && mouseX <= 375 && mouseY >= 540 && mouseY <= 580 && activeGame ==true){  // Stand
-    activeGame = false;
-    playerStand = true;
-  } 
 }
