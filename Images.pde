@@ -69,7 +69,7 @@ void imageLoader(){
 ////////////////////////////////////////////////////////
 //               VOID DISPLAY SCREEN                  //
 ////////////////////////////////////////////////////////
-// * Display the appropiate secondary tab, based on the player's selection
+// * Dispaly the appropiate secondary tab, based on the player's selection
 
 void displayScreens(){
   if (rulesScreen == true){
