@@ -50,6 +50,7 @@ boolean activeGame = false;
 boolean restart = false;
 boolean determineWinner = false;
 boolean Aprocedure = false;
+boolean possibleDouble = true;
 
 // Booleans that define the Screen's Status
 boolean rulesScreen = true;
@@ -147,8 +148,11 @@ void draw () {
   else{
      text("Bet: $"+increments[incrementIndex], 220, 280);
   }
+  if (nathan.currentAmount <=0){
+    fill(255,0,0);
+    text("GAME OVER", 250, 300);
+  }
   text("$"+nathan.currentAmount, 400, 280);
-  
   
   //************ EVALUATE CURRENT GAME AND PLAYER CONDITIONS *******************
   
@@ -156,7 +160,7 @@ void draw () {
   // * Generate cards for the player and dealer
   // * Set the game status to active
   
-  if (cardClicked ==true && playerDoubled == false){
+  if (cardClicked ==true && playerDoubled == false && activeGame == false){
     bob.displayNewCardPlayer(bob.randomCard(1));
     bob.displayNewCardPlayer(bob.randomCard(1));
     bob.displayNewCardDealer(bob.randomCard(2));
