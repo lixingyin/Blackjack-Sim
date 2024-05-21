@@ -1,0 +1,203 @@
+////////////////////////////////////////////////////////
+//               VOID MOUSE CLICKED                   //
+////////////////////////////////////////////////////////
+
+void mouseClicked(){
+  //************ BUTTONS THAT WILL GENERATE NEW CARD(S) *******************
+  // * Activate the cardClicked boolean
+  // * Reset the AProcedure after the player decided to hit instead of changing the "A" value
+  
+  if (cardClicked == false){
+    
+    // DEAL
+    // * Check that the game has not strted yet
+    // * Check that the player has not been busted
+    // * Check that the player has available funds to start a new game
+
+    
+    if (mouseX >= 50 && mouseX <= 200 && mouseY >= 420 && mouseY <= 460 && activeGame ==false && playerBusted == false && nathan.currentAmount >0){
+      cardClicked = true;
+      
+      // * Restart all original values for a new game
+      if(restart == true){
+        round =1;
+        bob.handValue = 0;
+        bob.playerHandValue = 0;
+        bob.playerRound= 1;
+        bob.dealerRound =1; 
+        playerDoubled = false;
+        restart = false;
+        
+        // * Reset bet amount if the player doubled in the previous round
+        if(playerDoubled == true){
+          nathan.currentBet /=2;
+        }
+      }  
+    }
+    
+    // HIT
+    // * Check that the game has started 
+    
+    else if (mouseX >= 50 && mouseX <= 200 && mouseY >= 540 && mouseY <= 580 && activeGame ==true){
+      cardClicked = true;
+      Aprocedure = false;
+    }
+    
+    // DOUBLE
+    // * Check that the game has started 
+    // * Double the player's current bet
+    
+    else if (mouseX >= 225 && mouseX <= 375 && mouseY >= 480 && mouseY <= 520 && activeGame ==true){
+      nathan.currentBet *=2;
+      cardClicked = true;
+      playerStand = true;
+      playerDoubled = true;
+      Aprocedure = false;
+    }
+  }
+  
+  //************ BUTTONS THAT WILL GENERATE NEW CARD(S) *******************
+  // * Check that the game has not started yet
+  // * Check that the player has not been busted
+  // * Check that the player did not stand
+  // * Update the player's betting amount from the increments array
+  // * Reset the AProcedure after the player decided to hit instead of changing the "A" value
+  
+  // INCREASE BET
+  // * Increase the index value by one to the next increment
+  
+  if (mouseX >= 400 && mouseX <= 550 && mouseY >= 420 && mouseY <= 460 && activeGame ==false && playerBusted == false && playerStand == false && incrementIndex+1 <increments.length ){  // Inc Increment
+    incrementIndex +=1;
+    nathan.currentBet = increments[incrementIndex];
+    Aprocedure = false;
+  }
+  
+  // DECREASE BET
+  // * Decrese the index value by one to the previous increment
+  
+  if (mouseX >= 225 && mouseX <= 375 && mouseY >= 420 && mouseY <= 460 && activeGame ==false && playerBusted == false && playerStand == false && incrementIndex >0 ){  // dec Increment
+    incrementIndex -=1;
+    nathan.currentBet = increments[incrementIndex];
+    Aprocedure = false;
+  }
+  
+  
+  
+  //************ BUTTONS THAT WILL UPDATE THE SECONDARY SCREEN *******************
+  
+  // RULES
+  // * Check that the rulesScreen boolean is set to false
+  // * Set the rulesScreen boolean to true
+  // * Set the cheatSheetScreen boolean to false
+  
+  if (mouseX >= 400 && mouseX <= 550 && mouseY >= 480 && mouseY <= 520 && rulesScreen == false){
+    rulesScreen = true;
+    cheatSheetScreen = false;
+  }
+  
+  // CHEAT SHEET
+  // * Check that the cheatSheetScreen boolean is set to false
+  // * Set the cheatSheetScreen boolean to true
+  // * Set the rulesScreen boolean to false
+  
+  if (mouseX >= 400 && mouseX <= 550 && mouseY >= 540 && mouseY <= 580 && cheatSheetScreen == false){ 
+    cheatSheetScreen = true;
+    rulesScreen = false;
+  }
+  
+  
+  
+  //************ DECISION MAKING BUTTONS *******************
+  
+  // A --> 11 
+  // * Check that the Aprocedure boolean is set to true
+  // * Increase the card value by a value of 10
+  // * Set the Aprocedure boolean to false
+  
+  if (mouseX >= 50 && mouseX <= 200 && mouseY >= 480 && mouseY <= 520 && Aprocedure == true){
+    bob.playerHandValue +=10;
+    Aprocedure = false;
+  }
+
+  // STAND 
+  // * Check that the game has started
+  // * ITurn the game from active to inacrive for the player
+  // * Set the playerStand boolean to true
+  // * Reset the AProcedure after the player decided to hit instead of changing the "A" value
+  
+  if (mouseX >= 225 && mouseX <= 375 && mouseY >= 540 && mouseY <= 580 && activeGame ==true){
+    activeGame = false;
+    playerStand = true;
+    Aprocedure = false;
+  }  
+}
+
+
+////////////////////////////////////////////////////////
+//               VOID DISPLAY BUTTONS                 //
+////////////////////////////////////////////////////////
+
+void displayButtons(){
+  //************ DRAW THE BUTTONS *******************
+  fill(250);
+  strokeWeight(5);
+  stroke(128);
+  rect(125,440,150,40);
+  rect(300,440,150,40);
+  rect(475,440,150,40);
+  rect(125,500,150,40);
+  rect(300,500,150,40);
+  rect(475,500,150,40);
+  rect(125,560,150,40);
+  rect(300,560,150,40);
+  rect(475,560,150,40); 
+  
+  //************ DRAW THE TEXT FOR EACH BUTTON *******************
+  fill(0);
+  textSize(16);
+  text("Deal",110,445);
+  text("Decrease Bet",250,445);
+  text("Increase Bet",430,445);
+  text("A --> 11",90,505);
+  text("Double",270,505);
+  text("Rules",450,505);
+  text("Hit",110,565);
+  text("Stand",280,565);
+  text("Cheat Sheet",435,565);
+  
+  //************ ADD GOLD BORDERS TO ACTIVE BUTTONS *******************
+  // * Use the same conditions of mousePressed to determine which buttons can be clicked and draw a diffent voloured border to make it easier for the player to know its available options
+  
+  noFill();
+  stroke(200,150, 35);
+  if (activeGame ==true){
+    rect(125,560,150,40); // Hit
+    rect(300,500,150,40); // Double
+    rect(300,560,150,40); // Stand
+  }
+  
+  if (activeGame ==false && playerBusted == false && nathan.currentAmount >0){  
+    rect(125,440,150,40); // Deal
+  }
+  
+  if (activeGame ==false && playerBusted == false && playerStand == false && incrementIndex+1 <increments.length ){  
+    rect(475,440,150,40);  // Increase Bet
+  }
+  
+  if (activeGame ==false && playerBusted == false && playerStand == false && incrementIndex >0 ){ 
+    rect(300,440,150,40);  // Decrease Bet
+  } 
+  
+  if (rulesScreen == false){  
+    rect(475,500,150,40);  // Rules
+  }
+  
+  if (cheatSheetScreen == false){  
+    rect(475,560,150,40);   // Cheat Sheet 
+  }
+  
+  if (Aprocedure == true){  
+    rect(125,500,150,40);  // A --> 11
+  }
+  
+}
