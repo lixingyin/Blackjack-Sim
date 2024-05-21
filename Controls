@@ -40,18 +40,21 @@ void mouseClicked(){
     
     else if (mouseX >= 50 && mouseX <= 200 && mouseY >= 540 && mouseY <= 580 && activeGame ==true){
       cardClicked = true;
+      possibleDouble = false;
       Aprocedure = false;
+     
     }
     
     // DOUBLE
     // * Check that the game has started 
     // * Double the player's current bet
     
-    else if (mouseX >= 225 && mouseX <= 375 && mouseY >= 480 && mouseY <= 520 && activeGame ==true){
+    else if (mouseX >= 225 && mouseX <= 375 && mouseY >= 480 && mouseY <= 520 && activeGame ==true && possibleDouble == true){
       nathan.currentBet *=2;
       cardClicked = true;
       playerStand = true;
       playerDoubled = true;
+      possibleDouble = false;
       Aprocedure = false;
     }
   }
@@ -172,8 +175,10 @@ void displayButtons(){
   stroke(200,150, 35);
   if (activeGame ==true){
     rect(125,560,150,40); // Hit
-    rect(300,500,150,40); // Double
     rect(300,560,150,40); // Stand
+    if (possibleDouble == true){
+      rect(300,500,150,40); // Double
+    }
   }
   
   if (activeGame ==false && playerBusted == false && nathan.currentAmount >0){  
